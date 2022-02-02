@@ -1,0 +1,5 @@
+start - Prints the Introduction
+roadmap - Builds the Roadmap according to your level
+level_up - Increases the level of difficulty
+level_down - Decreases the level of difficulty
+help - Gives the full list of commands
