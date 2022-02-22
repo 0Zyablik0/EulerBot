@@ -1,4 +1,4 @@
-from init import db
+from . import db
 
 
 class User(db.Model):
@@ -52,6 +52,3 @@ class Course(db.Model):
 
     def __repr__(self):
         return '<Topic %r>' % self.name
-
-
-db.create_all()

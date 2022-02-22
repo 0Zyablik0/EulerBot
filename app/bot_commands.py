@@ -1,18 +1,16 @@
 import json
 
 import requests
+from flask import current_app
 from sqlalchemy import func
 
-from credentials import bot_token
-from init import db
-from models import User, Topic
-from speeches import speeches
-
-TOKEN = bot_token
+from .models import User, Topic
+from app.speeches import speeches
+from . import db
 
 
 def send_message(data, method='sendMessage'):
-    url = f"https://api.telegram.org/bot{TOKEN}/{method}"
+    url = f"https://api.telegram.org/bot{current_app.config.get('BOT_TOKEN')}/{method}"
     requests.post(url, data=data)
 
 
@@ -25,13 +23,13 @@ def parse_callback_query(request):
     text = f"I want to advise you these materials for learning *{topic_name}*:\n\n"
     if not topic:
         return
-    text += "-"*40 + "\n"
+    text += "-" * 40 + "\n"
     text += "*Books:*\n\n"
     for book in topic.books:
         text += f"[{book.title}]({book.urls}) _by {', '.join(book.authors)}_\n\n"
 
     text += "*Courses:* _will be available soon..._\n\n"
-    text += "-"*40 + '\n'
+    text += "-" * 40 + '\n'
     text += "PRESS /roadmap to return back\n"
     data["text"] = text
     send_message(data)

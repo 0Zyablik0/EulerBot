@@ -1,10 +1,10 @@
 from flask import request
 
-from bot_commands import parse_callback_query, parse_message
-from init import app
+from . import main
+from ..bot_commands import parse_callback_query, parse_message
 
 
-@app.route("/", methods=["POST"])
+@main.route("/", methods=["POST"])
 def receive_update():
     print(request.json)
     if request.method == "POST":
@@ -15,7 +15,3 @@ def receive_update():
                 case "message":
                     parse_message(value)
     return {"ok": True}
-
-
-if __name__ == '__main__':
-    app.run(threaded=True)
